@@ -39,7 +39,7 @@ function! operator#replace#do(motion_wise)  "{{{2
   if !s:is_empty_region(getpos("'["), getpos("']"))
     let original_selection = &g:selection
     let &g:selection = 'inclusive'
-    execute 'normal' '`['.visual_command.'`]"_d'
+    call feedkeys('`['.visual_command.'`]"_d', 'i')
 
     " Work around
     " When regtype is linewise and text object is entire buffer, remove
@@ -50,7 +50,7 @@ function! operator#replace#do(motion_wise)  "{{{2
 
     let &g:selection = original_selection
   end
-  execute 'normal' '"'.operator#user#register().put_command
+  call feedkeys('"'.operator#user#register().put_command, 'n')
   let &g:virtualedit = original_virtualedit
   return
 endfunction
