@@ -39,6 +39,11 @@ function! operator#replace#do(motion_wise)  "{{{2
   if !s:is_empty_region(getpos("'["), getpos("']"))
     let original_selection = &g:selection
     let &g:selection = 'inclusive'
+
+    let g:operator_replace_active = 1
+    let g:operator_replace_start_pos = getpos("'[")
+    let g:operator_replace_end_pos = getpos("']")
+
     execute 'normal' '`['.visual_command.'`]"_d'
 
     " Work around
@@ -51,6 +56,8 @@ function! operator#replace#do(motion_wise)  "{{{2
     let &g:selection = original_selection
   end
   execute 'normal' '"'.operator#user#register().put_command
+
+  let g:operator_replace_active = 0
   let &g:virtualedit = original_virtualedit
   return
 endfunction
